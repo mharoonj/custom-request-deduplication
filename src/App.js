@@ -1,24 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { configureStore } from "./configureStore";
+import { Provider } from "react-redux";
+import ComponentOne from "./MyComponents/ComponentOne";
+import ComponentTwo from "./MyComponents/ComponentTwo";
 function App() {
+  const store = configureStore;
+  window.localStorage.clear(); //clear all localstorage
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <div className="App">
+        <ComponentTwo />
+        <ComponentOne />
+      </div>
+    </Provider>
   );
 }
 
