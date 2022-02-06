@@ -6,24 +6,29 @@ export default function useAPI(value) {
   
   const [data, setData] = useState(value);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 const url_data = useSelector((state)=>state.api)
 const dispatch = useDispatch()
 // console.log("Executing Component : ",value)
- console.log("url data :", url_data)
+//  console.log("url data :", url_data)
 useEffect(async()=>{
-    let url_value = localStorage.getItem("flag")
+    let url_value = localStorage.getItem(value)
     if(!url_value){
-        localStorage.setItem("flag", value)
+        console.log("pehle idhr")
+        localStorage.setItem(value, true)
         await dispatch(startFetching())
-        await dispatch(startLoading())
+        await dispatch(startLoading(value))
 
     }else{
-        if(url_value == value){
+        console.log("idhr aya : ", typeof url_value)
+        if(url_value == "true"){
+            console.log("idhr if")
             console.log("Waiting ....................")
         }else{
-            localStorage.setItem("flag2", value)
+            console.log("idhr else")
+            localStorage.setItem(value, true)
             dispatch(startFetching())
-            dispatch(startLoading())
+            dispatch(startLoading(value))
         }
     }
 
@@ -39,7 +44,11 @@ useEffect(()=>{
  
      setLoading(url_data.loading)
 },[url_data.loading])
+useEffect(()=>{
+    console.log("error :", url_data.error)
+    setError(url_data.error)
+},[url_data.error])
 
-  return [url_data.data, url_data.loading,null];
+  return [url_data.data, url_data.loading,error];
 }
 
