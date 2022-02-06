@@ -6,7 +6,7 @@ export default function useAPI(value) {
   const url_data = useSelector((state) => state.api);
   const dispatch = useDispatch();
 
-  useEffect(async () => {
+  useEffect( () => {
     //  checking local storage,
     // if url is present there then listen to store
     // else start fetch data from url  = 'X'
@@ -18,11 +18,11 @@ export default function useAPI(value) {
       //  is already in execution or executed(can be get from store now)
       localStorage.setItem(value, true);
       // updates the value for loading=true against url = 'X' in redux store
-      await dispatch(startLoading(value));
+       dispatch(startLoading(value));
       //   fires action to start fetching data and then send it to redux store
-      await dispatch(startFetching(value));
+       dispatch(startFetching(value));
     } else {
-      if (url_value == "true") {
+      if (url_value === "true") {
         // this block only runs when required data from url is already
         // in process. This hook starts listening to data from store
         // whenever there is update in store for required url data
