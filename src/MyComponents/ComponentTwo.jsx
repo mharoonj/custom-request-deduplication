@@ -16,7 +16,6 @@ const override = css`
 
 const ComponentTwo = ({ url }) => {
   const [data, loading, error] = useAPI(url);
-   const url_data = useSelector((state)=>state.api)
   const renderSequence = ()=>{
     if(error){
       return <Message type={"error"} text = {'Network Error'} />

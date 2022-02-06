@@ -1,8 +1,8 @@
 import * as ActionTpes from "./actionTypes";
 import {useDispatch} from "react-redux";
 
-export const startLoading = (url)=>{
-    console.log("started fetching")
+export const startFetching = (url)=>{
+  
     
 
     return (dispatch)=>{
@@ -11,14 +11,15 @@ export const startLoading = (url)=>{
                 "method": "GET",
                
             }).then((response)=> {
-                console.log(">>>>>>>>>>> response not ok <<<<<<<<<<")
+               
 
                 if(!response.ok){
                     // Network Error 
-                    console.log(">>>>>>>>>>> response not ok")
+                   
                     dispatch({
                         type:ActionTpes.ERROR_IN_API,
-                        payload:true
+                        payload:true,
+                        api_key:url
                     })
                 }
         
@@ -28,14 +29,16 @@ export const startLoading = (url)=>{
             
                 dispatch({
                     type:ActionTpes.LOAD_API_DATA,
-                    payload:response
+                    payload:response,
+                    api_key:url
                 })
             }).catch(err=>{
-                console.log(">>>>>>>>>>> response not ok <<<<<<<<<<")
-                console.error("parsing error : ",err);
+       
+                
                 dispatch({
                     type:ActionTpes.ERROR_IN_API,
-                    payload:true
+                    payload:true,
+                    api_key:url
                 })
             })
            ;
@@ -48,12 +51,13 @@ export const startLoading = (url)=>{
  
 }
 
-export const startFetching = ()=>{
+export const startLoading = (url)=>{
   
 
    return ({
        type:ActionTpes.START_FETCHING,
-       payload:null
+       payload:null,
+       api_key:url
    })
  
 }

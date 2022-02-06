@@ -14,15 +14,14 @@ const override = css`
 `;
 
 const ComponentOne = ({ url }) => {
-  const url_data = useSelector((state) => state.api);
   const [data, loading, error] = useAPI(url);
-  console.log("render useApi : ", data,loading, error)
+
   const renderSequence = ()=>{
     if(error){
       
       return <Message type={"error"} text = {'Network Error'} />
     }else if(loading){
-      console.log("LOADING TRUE")
+   
       return <DotLoader color="#36D7B7" loading={loading} css={override} size={150} />
     }else{
       return <ul>
