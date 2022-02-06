@@ -6,7 +6,7 @@ import "./Styles.css";
 import Header from "./Header";
 import { override } from "../utils/loader";
 
-const ComponentTwo = ({ url }) => {
+const ComponentTwo = ({ url, name }) => {
   const [data, loading, error] = useAPI(url); // Custom hook
 
   // this function checks values of error, loading and data
@@ -28,14 +28,14 @@ const ComponentTwo = ({ url }) => {
         <ul>
           {data &&
             data.map((item) => {
-              return item.title && <li key={item.title}>{item.title}</li>;
+              return item[name] && <li key={item[name]}>{item[name]}</li>;
             })}
         </ul>
       );
     }
   };
   return (
-    <div  className="inline-block w-40">
+    <div className="inline-block w-40">
       <Header headerNo="2" />
       {renderSequence()}
     </div>

@@ -1,70 +1,46 @@
-# Getting Started with Create React App
+# Steps to run
+1. npm install or yarn 
+2. npm run
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Prerequisites
+**Must have cors extension in your browser**
+Free APIs that are being used needs this cors extension to work properly, else System will show **Network Error**
 
-## Available Scripts
 
-In the project directory, you can run:
 
-### `yarn start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+------------
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# How it works?
+Currently there are 2 Components, **ComponentOne ** and **ComponentTwo**. Both  components use a custom hook named **useAPI**. Purpose of this hook is to handle same URL requests. For Example, if ComponentOne and ComponentTwo both fetches data from same URL, but they are sending two requests to network. However both are fetching same data there should have been only one request sent to network, who ever fires it first, and other should wait for its result.
 
-### `yarn test`
+In this task I am going to handle this problem. For it, I am using redux for state management. Urls from **gorest.com** (* they requiree cors extension enabled). 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+#### Sequence of Program
+Suppose, url is 'X'
+###### For ComponentOne and ComponentTwo
+1. ComponentOne is using useAPI hook to fetch data from url 'X'. 
+2. It will check whether request for url 'X' is already in process or not. For it, it will first check in localstorage.
+	**a**. 	If there is a key( which will be our url 'X' itself) present, it means this url is already 	fetching data. It will wait for previous execution to complete. 
+	**b**.		 If url 'X' is not present then first it will store url as key in localstorage. Then dispatch loading action and data fetching action to store.
+3. In redux store I am storing data in this format
+```json
+{ "data": {
+                "www.google.com":{
+	                  "data": ["...."], "loading":false, "error": false
+					  },
+					   "www.yahoo.com":{
+	                  "data": ["...."], "loading":false, "error": false
+					  }
+			} 
+	}
+```
+4. So whenever a loading, error or data fetching action is dispatched, it changes data in redux store for that particular key, for example in google.com.
+5. If a Component, lets say calls same url after 10 mins , now it will get data from store instead of making network call. 
+6. Thats how i am handling request deduplication.
 
-### `yarn build`
+##### Data Flow Diagram 
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+![alt text](https://github.com/mharoonj/pics/blob/master/New%20Doc%202022-02-06%2023.29.25.jpg?raw=true)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

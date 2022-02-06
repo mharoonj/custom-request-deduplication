@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useContext } from "react";
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { startFetching, startLoading } from "../actions/actions";
 

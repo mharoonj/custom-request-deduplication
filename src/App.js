@@ -3,21 +3,17 @@ import { Provider } from "react-redux";
 import ComponentOne from "./MyComponents/ComponentOne";
 import ComponentTwo from "./MyComponents/ComponentTwo";
 
-const url = "https://gorest.co.in/public/v2/posts" ;
+const url = "https://gorest.co.in/public/v2/posts";
+// const url2 = "https://gorest.co.in/public/v2/users";
 function App() {
-  const store = configureStore;
   window.localStorage.clear(); //clear all localstorage
-  // const renderLate =()=>{
-  //   setTimeout(()=>{
-  //     return 
-  //   },2000)
-  // }
+
   return (
-    <Provider store={store}>
+    <Provider store={configureStore}>
       <div className="App">
-        <ComponentOne url={url}/>
-        <ComponentTwo url={url}/>
-        <ComponentTwo url={"www.google.com"}/>
+        <ComponentOne url={url} name="title" />
+        <ComponentTwo url={url} name="title" />
+        {/* <ComponentTwo url={url2} name="name" /> To check if other urls work or not*/}
       </div>
     </Provider>
   );
